@@ -1,37 +1,44 @@
 import React from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import "./style.css";
 
 class App extends React.Component {
-  constructor() {
-    this.state ={count : 0,count2 : 0};
+  constructor(prop) {
+    this.state = prop.time;
   }
 
-  countDown(){
-    this.setState(state =>({
-      count: state.count - 1
+  countDown() {
+    this.setState(state => ({
+      count: state.count > 0 ? state.count - 1 : state.count
     }));
-     this.setState(state =>({
-      count2: state.count2 + 1
-    }))
   }
 
-  componentDidMount(){
-    this.interval = setInterval(()=> this.countDown(),1000);
+  countUp() {
+    this.setState(state => ({
+      count1: state.count1 < 10 ? state.count1 + 1 : state.count1
+    }));
   }
 
-  componentWillUnmount(){
-    clearInterval(this.interval);
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.countDown();
+      this.countUp();
+    }, 1000);
   }
 
   render() {
     return (
       <div>
-        <h1>Count Down :{this.state.count2}</h1>
-        <h2>Count Down :{this.state.count}</h2>
+        <h1>Count Down :{this.state.count}</h1>
+        <h2>Increment :{this.state.count1}</h2>
       </div>
     );
   }
 }
 
-render(<App/>, document.getElementById("root"));
+const timer = {
+  count: 10,
+  count1: 0
+};
+
+ReactDOM.render(<App time={timer} />, document.getElementById("root"));
