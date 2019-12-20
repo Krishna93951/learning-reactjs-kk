@@ -2,67 +2,77 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./style.css";
 
-// function Button() {
-//   function handleClick(e) {
-//     e.preventDefault();
-//     console.log('The button was clicked.');
-//   }
+// function ListItem(props) {
+//   return <li>{props.key} {props.id}</li>;
+// }
 
+// function NumberList(props) {
+//   const numbers = props.numbers;
+//   const listItems = numbers.map((number) =>
+//     <ListItem key={number.toString()}
+//               value={number} id={number.toString()}/>
+
+//   );
 //   return (
-//     <button onClick={handleClick}>
-//       Click me
-//     </button>
+//     <ul>
+//       {listItems}
+//     </ul>
 //   );
 // }
-// const  element = <Button/>
 
-// ReactDOM.render(element,document.getElementById('root'));
+// const numbers = [1, 2, 3, 4, 5];
+// ReactDOM.render(
+//   <NumberList numbers={numbers} />,
+//   document.getElementById('root')
+// );
 
-class Toggle extends React.Component {
+// function ListItem(props) {
+//   return <li>{props.value}</li>;
+// }
+
+// function NumberList(props) {
+//   const numbers = props.numbers;
+//   const listItems = numbers.map((number) =>
+//     <ListItem key={number.toString()}
+//               value={number} />
+
+//   );
+//   return (
+//     <ul id="list">
+//       {listItems}
+//     </ul>
+//   );
+// }
+// const list=[`a) Lion`,`b) Tiger`,`c) WoodPecker`,`d) Zebra`,`e) Bear`];
+// ReactDOM.render(<NumberList numbers={list}/>,document.querySelector('#root'));
+
+class EssayForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isToggleOn: true};
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      value: 'Please write an essay about your favorite DOM element.'
+    };
   }
 
-  handleClick() {
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn
-    }));
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert(`An essay was submitted: ${this.state.value}`);
+    event.preventDefault();
   }
 
   render() {
     return (
-      <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
-      </button>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Essay:
+          <textarea value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     );
   }
 }
-
-ReactDOM.render(
-  <Toggle />,
-  document.getElementById('root')
-);
-
-// function UserGreeting(props) {
-//   return <h1>Welcome back!</h1>;
-// }
-
-// function GuestGreeting(props) {
-//   return <h1>Please sign up.</h1>;
-// }
-
-// function Greeting(props) {
-//   const isLoggedIn = props.isLoggedIn;
-//   if (isLoggedIn) {
-//     return <UserGreeting />;
-//   }else{
-//     return<GuestGreeting />;
-//   }
-// }
-
-// ReactDOM.render(
-//   <Greeting isLoggedIn={false} />,
-//   document.getElementById('root')
-// );
+ReactDOM.render(<EssayForm/>,document.querySelector('#root'));
